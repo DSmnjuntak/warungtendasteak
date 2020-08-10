@@ -1,18 +1,19 @@
 import 'dart:convert';
 
-import 'package:warungtendasteak/core/model/categories_model.dart';
 import 'package:http/http.dart' as http;
 
-class categoriesService {
+import '../model/categories_model.dart';
+
+class CategoriesService {
   String categoriesURL = "https://www.themealdb.com/api/json/v1/1/categories.php";
 
-  Future<CategoriesModel> getCategories() async {
+  Future<CategoryModel> getCategories() async {
     try {
       final apiRespons = await http.get(categoriesURL);
 
       if (apiRespons.statusCode == 200){
         Map jsonObject = jsonDecode(apiRespons.body);
-        CategoriesModel categoriesModel = CategoriesModel.fromJson(jsonObject);
+        CategoryModel categoriesModel = CategoryModel.fromJson(jsonObject);
         return categoriesModel;
 
       } else {

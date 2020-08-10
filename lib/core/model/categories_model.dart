@@ -1,41 +1,53 @@
+// To parse this JSON data, do
+//
+//     final categoryModel = categoryModelFromJson(jsonString);
+
 import 'dart:convert';
 
-CategoriesModel categoriesFromJSON(String string) => CategoriesModel.fromJson(json.decode(string));
-String categoriesModelToJSON(CategoriesModel data) => json.encode(data.toJSON());
+CategoryModel categoryModelFromJson(String str) => CategoryModel.fromJson(json.decode(str));
 
-class CatergoriesModel {
-  List<Categories> categories;
+String categoryModelToJson(CategoryModel data) => json.encode(data.toJson());
 
-  CatergoriesModel({
+class CategoryModel {
+  CategoryModel({
     this.categories,
   });
 
-  factory CatergoriesModel.fromJson(Map<String, dynamic> json) => CatergoriesModel(
-    categories: List<Categories>.from(json["categories"].map((value) => Categories.fromJson((value))));
+  List<Category> categories;
+
+  factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
+    categories: List<Category>.from(json["categories"].map((x) => Category.fromJson(x))),
   );
 
-  Map<String, dynamic> toJSON() => {
-    "categories" : List<Categories>.from(categories.map((e) => e.toJSON())),
+  Map<String, dynamic> toJson() => {
+    "categories": List<dynamic>.from(categories.map((x) => x.toJson())),
   };
 }
 
-class Categories {
+class Category {
+  Category({
+    this.idCategory,
+    this.strCategory,
+    this.strCategoryThumb,
+    this.strCategoryDescription,
+  });
+
   String idCategory;
   String strCategory;
   String strCategoryThumb;
   String strCategoryDescription;
 
-  Categories({
-    this.idCategory,
-    this.strCategory,
-    this.strCategoryDescription,
-    this.strCategoryThumb,
-  });
-
-  factory Categories.fromJSON(Map<String, dynamic> json) => Categories(
+  factory Category.fromJson(Map<String, dynamic> json) => Category(
     idCategory: json["idCategory"],
     strCategory: json["strCategory"],
-    strCategoryDescription: json["strCategoryThumb"],
-    strCategoryThumb: json["strCategoryDescription"],
+    strCategoryThumb: json["strCategoryThumb"],
+    strCategoryDescription: json["strCategoryDescription"],
   );
+
+  Map<String, dynamic> toJson() => {
+    "idCategory": idCategory,
+    "strCategory": strCategory,
+    "strCategoryThumb": strCategoryThumb,
+    "strCategoryDescription": strCategoryDescription,
+  };
 }
